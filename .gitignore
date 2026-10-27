@@ -5,6 +5,12 @@ node_modules
 /deploy/worker/worker-secrets.json
 .DS_Store
 
+# frontend build output (built by `npm run build:frontend`)
+/frontend/dist
+
+# generated with environment-specific IDs by deploy/worker/generate-toml.js
+/deploy/worker/wrangler.toml
+
 *.sqlite
 *.sqlite-*
 

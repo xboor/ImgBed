@@ -10,6 +10,14 @@ RUN apt-get update && \
     npm ci --workspace=@cloudflare-imgbed/common --workspace=@cloudflare-imgbed/server --omit=dev && \
     rm -rf /root/.npm /var/lib/apt/lists/* /tmp/*
 
+FROM node:22-slim AS frontend
+
+WORKDIR /app
+COPY frontend/package.json frontend/package-lock.json ./frontend/
+RUN npm ci --prefix frontend
+COPY frontend ./frontend
+RUN npm run build --prefix frontend
+
 FROM node:22-slim AS runtime
 
 RUN apt-get update && \
@@ -21,9 +29,9 @@ WORKDIR /app
 ENV NODE_ENV=production
 
 COPY --from=dependencies /app/node_modules ./node_modules
+COPY --from=frontend /app/frontend/dist ./frontend/dist
 COPY package.json ./
 COPY deploy/profiles ./deploy/profiles
-COPY frontend-dist ./frontend-dist
 COPY functions ./functions
 COPY database ./database
 COPY deploy/server ./deploy/server

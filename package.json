@@ -11,9 +11,10 @@
     "ci-test:docker": "concurrently --kill-others \"npm run start:docker\" \"wait-on http://localhost:8080 && mocha\"",
     "test": "mocha",
     "test:server": "node --import ./deploy/server/register.mjs test/smoke/serverImports.mjs",
-    "start": "npx wrangler pages dev ./frontend-dist --kv \"img_url\" --r2 \"img_r2\" --ip 0.0.0.0 --port 8080 --persist-to ./data",
+    "start": "npx wrangler pages dev ./frontend/dist --kv \"img_url\" --r2 \"img_r2\" --ip 0.0.0.0 --port 8080 --persist-to ./data",
     "start:docker": "node --import ./deploy/server/register.mjs deploy/server/index.js",
-    "deploy:worker": "node deploy/worker/generate-routes.js && npx wrangler deploy --config deploy/worker/wrangler.toml"
+    "build:frontend": "bun install --cwd frontend && bun run --cwd frontend build",
+    "deploy:worker": "bun run build:frontend && node deploy/worker/generate-routes.js && bunx wrangler@4 deploy --config deploy/worker/wrangler.toml"
   },
   "overrides": {
     "fast-xml-parser": "^5.3.6"

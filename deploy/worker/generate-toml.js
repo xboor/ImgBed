@@ -66,7 +66,7 @@ compatibility_date = "2024-08-21"
 compatibility_flags = ["global_fetch_strictly_public"]
 
 [assets]
-directory = "../../frontend-dist"
+directory = "../../frontend/dist"
 binding = "ASSETS"
 not_found_handling = "single-page-application"
 

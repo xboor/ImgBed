@@ -14,7 +14,7 @@ Submit source changes to the repository responsible for the feature:
 
 - The main repository uses `main` for releases. The frontend's default branch is `master`, but feature and bug-fix PRs still target `dev`.
 - Unless a maintainer requests otherwise, create your working branch from the relevant PR target. Avoid including unrelated differences from release branches.
-- Submit frontend source changes to the frontend repository. Do not edit bundled scripts in the main repository's `frontend-dist/`; maintainers synchronize frontend artifacts during integration or release.
+- Frontend source lives in `frontend/` (originally from the frontend repository) and is built with `bun run build:frontend` into `frontend/dist`; do not commit build output.
 - Submit user-documentation changes to the documentation repository.
 - For changes spanning repositories, open separate, linked PRs. Explain the interface contract, compatibility requirements and suggested merge order. Each PR should have a clear responsibility and reproducible validation steps.
 

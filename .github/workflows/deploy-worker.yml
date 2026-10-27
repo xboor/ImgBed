@@ -60,6 +60,14 @@ jobs:
         if: steps.check.outputs.skip != 'true'
         run: npm ci --workspace=@cloudflare-imgbed/common --workspace=@cloudflare-imgbed/worker --omit=dev
 
+      - name: Install frontend dependencies
+        if: steps.check.outputs.skip != 'true'
+        run: npm ci --prefix frontend
+
+      - name: Build frontend
+        if: steps.check.outputs.skip != 'true'
+        run: npm run build --prefix frontend
+
       - name: Generate worker routes
         if: steps.check.outputs.skip != 'true'
         run: node deploy/worker/generate-routes.js
